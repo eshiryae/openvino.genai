@@ -92,6 +92,7 @@ public:
                                .create_infer_request();
         auto decoder_with_past_model = core.read_model(models_path / "openvino_decoder_with_past_model.xml");
         add_attention_mask_input(decoder_with_past_model);
+        ov::save_model(decoder_with_past_model, models_path / "openvino_decoder_with_past_model_attn_CPU.xml");
         m_models.decoder_with_past =
             core.compile_model(decoder_with_past_model, device, compile_properties)
                 .create_infer_request();
