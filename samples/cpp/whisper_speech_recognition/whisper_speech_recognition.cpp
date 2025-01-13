@@ -33,6 +33,15 @@ int main(int argc, char* argv[]) try {
         std::cout << "timestamps: [" << chunk.start_ts << ", " << chunk.end_ts << "] text: " << chunk.text << "\n";
     }
 
+    auto perf_metrics = result.perf_metrics;
+    std::cout << std::fixed << std::setprecision(2) << "\n\nLoad time: " << perf_metrics.get_load_time() << " ms" << std::endl;
+    std::cout << std::fixed << std::setprecision(2) << "Generate time: " << perf_metrics.get_generate_duration().mean << " ± " << perf_metrics.get_generate_duration().std << " ms" << std::endl;
+    std::cout << std::fixed << std::setprecision(2) << "Tokenization time: " << perf_metrics.get_tokenization_duration().mean << " ± " << perf_metrics.get_tokenization_duration().std << " ms" << std::endl;
+    std::cout << std::fixed << std::setprecision(2) << "Detokenization time: " << perf_metrics.get_detokenization_duration().mean << " ± " << perf_metrics.get_detokenization_duration().std << " ms" << std::endl;
+    std::cout << std::fixed << std::setprecision(2) << "TTFT: " << perf_metrics.get_ttft().mean << " ± " << perf_metrics.get_ttft().std << " ms" << std::endl;
+    std::cout << std::fixed << std::setprecision(2) << "TPOT: " << perf_metrics.get_tpot().mean << " ± " << perf_metrics.get_tpot().std << " ms" << std::endl;
+    std::cout << std::fixed << std::setprecision(2) << "Throughput : " << perf_metrics.get_throughput().mean << " ± " << perf_metrics.get_throughput().std << " tokens/s" << std::endl;
+
 } catch (const std::exception& error) {
     try {
         std::cerr << error.what() << '\n';
